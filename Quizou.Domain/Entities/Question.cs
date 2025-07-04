@@ -7,14 +7,22 @@ public class Question
 {
     [Key]
     public int Id { get; set; }
+
     [Required]
     public required string Text { get; set; }
+
     [Required]
-    public required List<Answer> Answers { get; set; }
+    public required ICollection<Answer> Answers { get; set; } = new List<Answer>();
+
     [Required]
-    public Difficulty Difficulty { get; set; }
+    public required Difficulty Difficulty { get; set; }
+
     [Required]
     public int Order { get; set; }
-    public int QuizId { get; set; } 
-    public Tag Tag { get; set; }
+
+    [Required]
+    public int QuizId { get; set; }
+    public Quiz? Quiz { get; set; }
+
+    public ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }

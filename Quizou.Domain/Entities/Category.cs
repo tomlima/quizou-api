@@ -7,11 +7,11 @@ public class Category
     public int Id { get; set; }
     
     [Required] 
-    public string Name { get; set; }
+    public required string Name { get; set; }
     
     [Required]
-    public string Slug { get; set; }
+    public required string Slug { get; set; }
     
     [Required] 
-    public string Icon { get; set; }
+    public required string Icon { get; set; }
 }   

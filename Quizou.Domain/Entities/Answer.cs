@@ -6,12 +6,14 @@ public class Answer
 {
     [Key]
     public int Id { get; set; }
-    
+
     [Required]
-    public string Text { get; set; }
-    
+    public required string Text { get; set; }
+
     [Required]
-    public bool Correct { get; set; }
-    
-    public int QuestionId { get; set; }
-}
+    public required bool Correct { get; set; }
+
+    [Required]
+    public required int QuestionId { get; set; }
+    public Question? Question { get; set; }
+}   

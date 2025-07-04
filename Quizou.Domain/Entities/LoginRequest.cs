@@ -1,7 +1,12 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Quizou.Domain.Entities;
 
 public class LoginRequest
 {
-    public string Email { get; set; }
-    public string Password { get; set; }
+    [Required]
+    public required string Email { get; set; }
+
+    [Required]
+    public required string Password { get; set; }
 }

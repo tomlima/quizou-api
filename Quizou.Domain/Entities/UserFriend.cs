@@ -1,12 +1,16 @@
+using System.ComponentModel.DataAnnotations;
 using Quizou.Domain.Entities;
 
 public class UserFriend
 {
-    public int UserId { get; set; }
-    public User User { get; set; }
+    [Required]
+    public required int UserId { get; set; }
+    public User? User { get; set; }
 
-    public int FriendId { get; set; }
-    public User Friend { get; set; }
+    [Required]
+    public required int FriendId { get; set; }
+    public User? Friend { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    [Required]
+    public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
