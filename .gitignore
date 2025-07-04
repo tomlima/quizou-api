@@ -1,0 +1,30 @@
+**/obj/
+**/bin
+
+# IDE`s settings
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Logs and temps
+*.log
+*.vs/
+*.DS_Store
+*.Thumbs.db
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# Publish temp files
+**/publish/
+**/out/
+
+# Nuget restaured files
+*.nupkg
+*.snupkg
+*.nuspec

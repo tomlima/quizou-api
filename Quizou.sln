@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36221.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Application", "Quizou.Application\Quizou.Application.csproj", "{5E89F6C2-C578-4480-972B-8A4BEF26E29F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Domain", "Quizou.Domain\Quizou.Domain.csproj", "{BE51B918-9808-4059-BFB0-3CB49D73A6AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Infrastructure", "Quizou.Infrastructure\Quizou.Infrastructure.csproj", "{E229C687-B93A-4910-97AD-791CEB2E9849}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Tests", "Quizou.Tests\Quizou.Tests.csproj", "{C3CD85C7-C508-44FB-980B-429B8E4AC52D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Api", "Quizou.Api\Quizou.Api.csproj", "{0B8E9E61-459C-47D1-9446-D74EEE18081B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quizou.Common", "Quizou.Common\Quizou.Common.csproj", "{E6B77567-1016-4138-A0F0-FF9F07A412CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E89F6C2-C578-4480-972B-8A4BEF26E29F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E89F6C2-C578-4480-972B-8A4BEF26E29F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E89F6C2-C578-4480-972B-8A4BEF26E29F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E89F6C2-C578-4480-972B-8A4BEF26E29F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE51B918-9808-4059-BFB0-3CB49D73A6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE51B918-9808-4059-BFB0-3CB49D73A6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE51B918-9808-4059-BFB0-3CB49D73A6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE51B918-9808-4059-BFB0-3CB49D73A6AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E229C687-B93A-4910-97AD-791CEB2E9849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E229C687-B93A-4910-97AD-791CEB2E9849}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E229C687-B93A-4910-97AD-791CEB2E9849}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E229C687-B93A-4910-97AD-791CEB2E9849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CD85C7-C508-44FB-980B-429B8E4AC52D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CD85C7-C508-44FB-980B-429B8E4AC52D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CD85C7-C508-44FB-980B-429B8E4AC52D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CD85C7-C508-44FB-980B-429B8E4AC52D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B8E9E61-459C-47D1-9446-D74EEE18081B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B8E9E61-459C-47D1-9446-D74EEE18081B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B8E9E61-459C-47D1-9446-D74EEE18081B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B8E9E61-459C-47D1-9446-D74EEE18081B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B77567-1016-4138-A0F0-FF9F07A412CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B77567-1016-4138-A0F0-FF9F07A412CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B77567-1016-4138-A0F0-FF9F07A412CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B77567-1016-4138-A0F0-FF9F07A412CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C348AEFA-C733-4344-860C-237A5EEAF661}
+	EndGlobalSection
+EndGlobal
