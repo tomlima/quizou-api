@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,29 +10,16 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Quizou.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704204821_AddTagListToQuiz")]
+    partial class AddTagListToQuiz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("QuizTag", b =>
-                {
-                    b.Property<int>("QuizzesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("int");
-
-                    b.HasKey("QuizzesId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("QuizTag");
-                });
 
             modelBuilder.Entity("Quizou.Domain.Entities.Answer", b =>
                 {
@@ -224,10 +212,15 @@ namespace Quizou.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("QuizId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuizId");
 
                     b.ToTable("Tags");
                 });
@@ -287,21 +280,6 @@ namespace Quizou.Infrastructure.Migrations
                     b.HasIndex("FriendId");
 
                     b.ToTable("UserFriends");
-                });
-
-            modelBuilder.Entity("QuizTag", b =>
-                {
-                    b.HasOne("Quizou.Domain.Entities.Quiz", null)
-                        .WithMany()
-                        .HasForeignKey("QuizzesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Quizou.Domain.Entities.Tag", null)
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Quizou.Domain.Entities.Answer", b =>
@@ -372,6 +350,13 @@ namespace Quizou.Infrastructure.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Quizou.Domain.Entities.Tag", b =>
+                {
+                    b.HasOne("Quizou.Domain.Entities.Quiz", null)
+                        .WithMany("Tag")
+                        .HasForeignKey("QuizId");
+                });
+
             modelBuilder.Entity("UserFriend", b =>
                 {
                     b.HasOne("Quizou.Domain.Entities.User", "Friend")
@@ -404,6 +389,8 @@ namespace Quizou.Infrastructure.Migrations
             modelBuilder.Entity("Quizou.Domain.Entities.Quiz", b =>
                 {
                     b.Navigation("Questions");
+
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("Quizou.Domain.Entities.User", b =>

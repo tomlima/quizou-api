@@ -35,5 +35,5 @@ public class Quiz
     [Required]
     public required string Image { get; set; }
     [Required]
-    public required Tag Tag { get; set; }
+    public required List<Tag> Tag { get; set; }
 }
