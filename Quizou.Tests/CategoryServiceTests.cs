@@ -18,8 +18,8 @@ namespace Quizou.Tests
             mockRepo.Setup(repo => repo.GetCategories())
                 .ReturnsAsync(new List<Category>
                 {
-                    new Category { Id = 1, Name = "Tecnology", Slug = "tecnology" },
-                    new Category { Id = 2, Name = "History", Slug = "history" }
+                    new Category { Id = 1, Name = "Tecnology", Slug = "tecnology", Icon="tecnology" },
+                    new Category { Id = 2, Name = "History", Slug = "history", Icon="history" }
                 });
 
             var service = new CategoryService(mockRepo.Object);
@@ -39,7 +39,7 @@ namespace Quizou.Tests
             var slug = "historia";
             var mockRepo = new Mock<ICategoryRepository>();
             mockRepo.Setup(repo => repo.GetCategoryBySlug(slug))
-                .ReturnsAsync(new Category { Id = 2, Name = "History", Slug = "history" });
+                .ReturnsAsync(new Category { Id = 2, Name = "History", Slug = "history", Icon="history" });
 
             var service = new CategoryService(mockRepo.Object);
 
