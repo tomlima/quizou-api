@@ -19,7 +19,6 @@ public class Quiz
     [Required]
     public required int Time { get; set; }
     
-    [Required]
     public ICollection<Question> Questions { get; set; } =new List<Question>();
 
     [Required]

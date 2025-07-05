@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Quizou.Application.Interfaces;  // Your service interfaces
+using Quizou.Domain.DTO;
 using System.Threading.Tasks;
 
 namespace Quizou.Api.Controllers
@@ -17,7 +18,7 @@ namespace Quizou.Api.Controllers
             _quizService = quizService;
             _logger = logger;
         }
-        
+       
         [HttpGet]
         public async Task<IActionResult> GetAllQuizzes([FromQuery] int page =1, [FromQuery] int pageSize = 10)
         {
@@ -36,7 +37,6 @@ namespace Quizou.Api.Controllers
             }
         }
         
-        // GET: /api/v1/quiz/category/movie
         [HttpGet("category/{categorySlug}")]
         public async Task<IActionResult> GetQuizzesByCategory(string categorySlug)
         {
@@ -52,7 +52,6 @@ namespace Quizou.Api.Controllers
             }
         }
         
-        // GET: /api/v1/quiz/featured
         [HttpGet("featured")]
         public async Task<IActionResult> GetQuizzesFeatured()
         {
@@ -68,7 +67,6 @@ namespace Quizou.Api.Controllers
             }
         }
         
-        // GET: /api/v1/quiz/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuizById(int id)
         {
@@ -84,7 +82,6 @@ namespace Quizou.Api.Controllers
             }
         }
         
-        // GET: /api/v1/quiz/search/harry
         [HttpGet("search/{term}")]
         public async Task<IActionResult> GetQuizzesBySearch(string term)
         {
@@ -98,6 +95,12 @@ namespace Quizou.Api.Controllers
                 _logger.LogError(ex, "Error search the term {term}", term );
                 return StatusCode(500, "An error occurred while processing your request.");
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateQuiz([FromBody] CreateQuizDto quiz)
+        {
+            return Ok(quiz);
         }
     }
 }
