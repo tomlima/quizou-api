@@ -34,7 +34,6 @@ public class TagService(ITagRepository repository): ITagService
         await repository.EditTag(tag);
         return true; 
     }
-
     public async Task<Boolean> DeleteTag(int id)
     {
         var tag = await repository.GetTagById(id);

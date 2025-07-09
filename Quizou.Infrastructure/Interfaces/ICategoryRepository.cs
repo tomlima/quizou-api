@@ -6,4 +6,5 @@ public interface ICategoryRepository
 {
     public Task<List<Category>> GetCategories();
     public Task<Category> GetCategoryBySlug(string categorySlug);
+    public Task<Category?> GetCategoryById(int id);
 }

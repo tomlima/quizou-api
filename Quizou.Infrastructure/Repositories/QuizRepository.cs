@@ -7,6 +7,12 @@ namespace Quizou.Infrastructure.Repositories;
 
 public class QuizRepository(ApplicationDbContext context): IQuizRepository
 {
+    public async Task<int> AddQuiz(Quiz quiz)
+    {
+        context.Quizzes.Add(quiz);
+        await context.SaveChangesAsync();
+        return quiz.Id;
+    }
     public async Task<PagedResult<Quiz>> GetQuizzes(int page, int pageSize)
     {
         var query = context.Quizzes

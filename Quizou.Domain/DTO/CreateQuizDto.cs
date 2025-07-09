@@ -9,9 +9,9 @@ namespace Quizou.Domain.DTO
         public string? Description { get; set; }
         public required int Time { get; set; }
         public required Difficulty Difficulty { get; set; }
-        public required Category Category { get; set; }
-        public required Tag Tag { get; set; }
-        public required string Thumb {  get; set; }
+        public required int CategoryId { get; set; }
+        public required ICollection<int> Tags { get; set; } = new List<int>();
+        public required string Image {  get; set; }
         public required QuizStatus Status { get; set; }
     }
 }

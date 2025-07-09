@@ -38,5 +38,5 @@ public class Quiz
     [Required]
     public required string Image { get; set; }
     
-    public  ICollection<Tag> Tag { get; set; } = new List<Tag>();
+    public  ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }

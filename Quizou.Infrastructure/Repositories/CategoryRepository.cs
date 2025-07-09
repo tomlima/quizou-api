@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Quizou.Domain.Entities;
 using Quizou.Infrastructure.Interfaces;
 
@@ -17,4 +18,9 @@ public class CategoryRepository(ApplicationDbContext context):ICategoryRepositor
         Category category = context.Categories.SingleOrDefault(c => c.Slug == categorySlug);
         return category;
     }
+    public async Task<Category?> GetCategoryById(int id)
+    {
+        return await context.Categories.FindAsync(id);
+    }
+
 }

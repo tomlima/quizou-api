@@ -26,6 +26,13 @@ public class TagRepository(ApplicationDbContext context):ITagRepository
     {
         return await context.Tags.FindAsync(id);
     }
+    public async Task<ICollection<Tag>> GetTagsByIds(ICollection<int> ids)
+    {
+        return await context.Tags
+           .Where(t => ids.Contains(t.Id))
+           .ToListAsync();
+    }
+
     public async Task<Tag?> GetTagByName(string name)
     {
         return await context.Tags.FirstOrDefaultAsync(t => t.Name == name); 

@@ -98,9 +98,18 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateQuiz([FromBody] CreateQuizDto quiz)
+        public async Task<IActionResult> AddQuizz([FromBody] CreateQuizDto quiz)
         {
-            return Ok(quiz);
+            try
+            {
+                int createdQuizId = await _quizService.AddQuizz(quiz);
+                return Ok(new { id = createdQuizId });
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error to create a new quiz");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
     }
 }

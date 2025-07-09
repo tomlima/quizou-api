@@ -10,9 +10,9 @@ namespace Quizou.Domain.Enums
 
     public enum Difficulty
     {
-        Easy,
-        Medium,
-        Hard
+        Fácil,
+        Moderado,
+        Dífícil
     }
 
     public enum Roles
