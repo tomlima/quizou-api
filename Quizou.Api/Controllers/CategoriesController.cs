@@ -12,7 +12,6 @@ namespace Quizou.Api.Controllers
         private readonly ICategoryService _categoryService;
         private readonly ILogger<CategoriesController> _logger; 
 
-
         public CategoriesController(ICategoryService categoryService,ILogger<CategoriesController> logger)
         {
             _categoryService = categoryService;
