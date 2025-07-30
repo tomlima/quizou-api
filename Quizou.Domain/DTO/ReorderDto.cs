@@ -2,7 +2,7 @@
 
 namespace Quizou.Domain.DTO
 {
-    public  class ReorderQuestionDto
+    public  class ReorderDto
     {
         [Required]
         public required int Id { get; set; }

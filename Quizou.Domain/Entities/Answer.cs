@@ -16,4 +16,6 @@ public class Answer
     [Required]
     public required int QuestionId { get; set; }
     public Question? Question { get; set; }
+    [Required]
+    public required int Order { get; set; }
 }   

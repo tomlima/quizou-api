@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using Quizou.Domain.Entities;
 
 namespace Quizou.Infrastructure.Interfaces;

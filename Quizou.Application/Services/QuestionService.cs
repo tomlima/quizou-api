@@ -46,7 +46,7 @@ namespace Quizou.Application.Services
             await _repository.Edit(question);
             return true;
         }
-        public async Task Reorder(IEnumerable<ReorderQuestionDto> payload)
+        public async Task Reorder(IEnumerable<ReorderDto> payload)
         {
             var ids = payload.Select(p => p.Id).ToList();
             var questions = await _repository.GetQuestionsByIds(ids);

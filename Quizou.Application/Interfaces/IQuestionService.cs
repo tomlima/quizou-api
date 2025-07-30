@@ -9,6 +9,6 @@ namespace Quizou.Application.Interfaces
         public Task<ICollection<Question>> GetQuestionsByQuiz(int quizId);
         public Task DeleteQuestion(int questionId);
         public Task<Boolean> Edit(int id, string newQuestion);
-        public Task Reorder(IEnumerable<ReorderQuestionDto> payload);
+        public Task Reorder(IEnumerable<ReorderDto> payload);
     }
 }

@@ -75,7 +75,7 @@ namespace Quizou.Api.Controllers
             }
         }
         [HttpPut("reorder")]
-        public async Task<IActionResult> Reorder([FromBody] IEnumerable<ReorderQuestionDto> payload)
+        public async Task<IActionResult> Reorder([FromBody] IEnumerable<ReorderDto> payload)
         {
             try
             {
