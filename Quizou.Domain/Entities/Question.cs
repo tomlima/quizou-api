@@ -1,5 +1,6 @@
-using System.ComponentModel.DataAnnotations;
 using Quizou.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Quizou.Domain.Entities;
 
@@ -21,7 +22,7 @@ public class Question
 
     [Required]
     public required int QuizId { get; set; }
-
+    [JsonIgnore]
     public Quiz? Quiz { get; set; }
 
     public ICollection<Tag> Tags { get; set; } = new List<Tag>();

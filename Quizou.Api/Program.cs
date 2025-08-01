@@ -1,13 +1,13 @@
-using Quizou.Infrastructure.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Quizou.Application.Services;
+using Microsoft.IdentityModel.Tokens;
 using Quizou.Application.Interfaces;
+using Quizou.Application.Services;
+using Quizou.Common.Interfaces;
+using Quizou.Infrastructure.Data;
 using Quizou.Infrastructure.Interfaces;
 using Quizou.Infrastructure.Repositories;
-using Microsoft.AspNetCore.Mvc;  
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Quizou.Common.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -90,8 +90,20 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthorization();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    // HTTP
+    options.ListenAnyIP(5000);
+
+    // HTTPS
+    options.ListenAnyIP(7089, listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
 var app = builder.Build();
-    
+
 // Seed database after the app is built but before it starts accepting requests
 using (var scope = app.Services.CreateScope())
 {
@@ -110,7 +122,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowFrontend");
-app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

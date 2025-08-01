@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Quizou.Domain.Entities;
+using Quizou.Domain.Enums;
 using Quizou.Infrastructure.Interfaces;
 
 namespace Quizou.Infrastructure.Repositories;
 
-
-public class QuizRepository(ApplicationDbContext context): IQuizRepository
+public class QuizRepository(ApplicationDbContext context) : IQuizRepository
 {
     public async Task<int> AddQuiz(Quiz quiz)
     {
@@ -16,6 +16,7 @@ public class QuizRepository(ApplicationDbContext context): IQuizRepository
     public async Task<PagedResult<Quiz>> GetQuizzes(int page, int pageSize)
     {
         var query = context.Quizzes
+            .Where(q => q.Status != QuizStatus.Deleted)
             .Include(q => q.Category)
             .OrderByDescending(q => q.CreatedAt);
 
@@ -35,7 +36,7 @@ public class QuizRepository(ApplicationDbContext context): IQuizRepository
     }
     public async Task<List<Quiz>> GetFaturedQuizzes()
     {
-        return  await context.Quizzes
+        return await context.Quizzes
             .Include(q => q.Category)
             .Where(q => q.Featured == true)
             .ToListAsync();
@@ -51,8 +52,10 @@ public class QuizRepository(ApplicationDbContext context): IQuizRepository
     public async Task<Quiz?> GetQuizById(int id)
     {
         Quiz? quiz = await context.Quizzes
-            .Include(q => q.Questions)         
-            .ThenInclude(question => question.Answers) 
+            .Include(t => t.Tags)
+            .Include(c => c.Category)
+            .Include(q => q.Questions)
+            .ThenInclude(question => question.Answers)
             .FirstOrDefaultAsync(q => q.Id == id);
         return quiz;
     }
@@ -63,5 +66,10 @@ public class QuizRepository(ApplicationDbContext context): IQuizRepository
             .Where(q => q.Title.ToLower().Contains(termSearched.ToLower()))
             .ToListAsync();
         return quiz;
+    }
+    public async Task Edit(Quiz quiz)
+    {
+        context.Quizzes.Update(quiz);
+        await context.SaveChangesAsync();
     }
 }

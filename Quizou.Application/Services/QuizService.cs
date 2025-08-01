@@ -1,4 +1,3 @@
-using Amazon.Runtime.Internal;
 using Quizou.Application.Interfaces;
 using Quizou.Common.Interfaces;
 using Quizou.Domain.DTO;
@@ -41,32 +40,64 @@ public class QuizService(IQuizRepository _quizRepository, ICategoryRepository _c
         return await _quizRepository.AddQuiz(quiz);
     }
     public async Task<PagedResult<Quiz>> GetQuizzes(int page, int pageSize)
-        {
-                var quizzes = await _quizRepository.GetQuizzes(page, pageSize);
-                return quizzes;
-        }
+    {
+        var quizzes = await _quizRepository.GetQuizzes(page, pageSize);
+        return quizzes;
+    }
     public async Task<List<Quiz>> GetFaturedQuizzes()
-        {
-                var quizzes = await _quizRepository.GetFaturedQuizzes();
-                return quizzes;
-        }
-        public async Task<List<Quiz>> GetQuizzesByCategory(string categorySlug)
-        {
-                var quizzes = await _quizRepository.GetQuizzesByCategory(categorySlug);
-                return quizzes;
-        }
-        public async Task<string?> GetQuizById(int id)
-        {
-                var quiz = await _quizRepository.GetQuizById(id);
-                if (quiz == null) return null;
+    {
+        var quizzes = await _quizRepository.GetFaturedQuizzes();
+        return quizzes;
+    }
+    public async Task<List<Quiz>> GetQuizzesByCategory(string categorySlug)
+    {
+        var quizzes = await _quizRepository.GetQuizzesByCategory(categorySlug);
+        return quizzes;
+    }
+    public async Task<string?> GetQuizById(int id)
+    {
+        var quiz = await _quizRepository.GetQuizById(id);
+        if (quiz == null) return null;
 
-                return encryptionService.Encrypt(quiz);
-        }
-        public async Task<List<Quiz>> GetQuizzesBySearch(string termSearched)
+        return encryptionService.Encrypt(quiz);
+    }
+    public async Task<List<Quiz>> GetQuizzesBySearch(string termSearched)
+    {
+        var quizzes = await _quizRepository.GetQuizzesBySearch(termSearched);
+        return quizzes;
+    }
+    public async Task Edit(EditQuizDto payload)
+    {
+        var category = await _categoryRepository.GetCategoryById(payload.CategoryId);
+        if (category == null)
         {
-                var quizzes = await _quizRepository.GetQuizzesBySearch(termSearched);
-                return quizzes;
+            throw new Exception("Category not found");
         }
-       
+        var tags = await _tagRepository.GetTagsByIds(payload.Tags);
 
+        Quiz? quiz = await _quizRepository.GetQuizById(payload.Id);
+        if (quiz == null)
+        {
+            throw new Exception("Quiz not found");
+        }
+        quiz.Title = payload.Title;
+        quiz.Description = payload.Description;
+        quiz.Difficulty = (Difficulty)payload.Difficulty;
+        quiz.Status = (QuizStatus)payload.Status;
+        quiz.Tags = tags;
+        quiz.Time = payload.Time;
+        quiz.Category = category;
+        quiz.UpdatedAt = DateTime.UtcNow;
+
+        await _quizRepository.Edit(quiz);
+    }
+    public async Task<bool> Delete(int id)
+    {
+        var quiz = await _quizRepository.GetQuizById(id);
+        if (quiz == null)
+            return false;
+        quiz.Status = QuizStatus.Deleted;
+        await _quizRepository.Edit(quiz);
+        return true;
+    }
 }

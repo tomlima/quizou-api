@@ -3,7 +3,7 @@ using Quizou.Domain.Entities;
 using Quizou.Infrastructure.Interfaces;
 namespace Quizou.Infrastructure.Repositories;
 
-public class TagRepository(ApplicationDbContext context):ITagRepository
+public class TagRepository(ApplicationDbContext context) : ITagRepository
 {
     public async Task<Tag> AddTag(Tag tag)
     {
@@ -20,7 +20,7 @@ public class TagRepository(ApplicationDbContext context):ITagRepository
     public async Task EditTag(Tag tag)
     {
         context.Tags.Update(tag);
-        await context.SaveChangesAsync(); 
+        await context.SaveChangesAsync();
     }
     public async Task<Tag?> GetTagById(int id)
     {
@@ -34,7 +34,7 @@ public class TagRepository(ApplicationDbContext context):ITagRepository
     }
     public async Task<Tag?> GetTagByName(string name)
     {
-        return await context.Tags.FirstOrDefaultAsync(t => t.Name == name); 
+        return await context.Tags.FirstOrDefaultAsync(t => t.Name == name);
     }
     public async Task<PagedResult<Tag>> GetTags(int page, int pageSize)
     {

@@ -11,4 +11,7 @@ public interface IQuizService
     public Task<List<Quiz>> GetQuizzesByCategory(string categorySlug);
     public Task<string?> GetQuizById(int quizId);
     public Task<List<Quiz>> GetQuizzesBySearch(string termSearched);
+    public Task Edit(EditQuizDto payload);
+    public Task<bool> Delete(int id);
+
 }

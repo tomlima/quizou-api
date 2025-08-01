@@ -9,4 +9,5 @@ public interface IQuizRepository
     public Task<List<Quiz>> GetQuizzesByCategory(string categorySlug);
     public Task<Quiz?> GetQuizById(int quizzId);
     public Task<List<Quiz>> GetQuizzesBySearch(string termSearched);
+    public Task Edit(Quiz quiz);
 }

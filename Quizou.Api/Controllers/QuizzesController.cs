@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Quizou.Application.Interfaces;  // Your service interfaces
 using Quizou.Domain.DTO;
-using System.Threading.Tasks;
 
 namespace Quizou.Api.Controllers
 {
@@ -11,16 +10,16 @@ namespace Quizou.Api.Controllers
     public class QuizzesController : ControllerBase
     {
         private readonly IQuizService _quizService;
-        private readonly ILogger<QuizzesController> _logger; 
+        private readonly ILogger<QuizzesController> _logger;
 
-        public QuizzesController(IQuizService quizService,ILogger<QuizzesController> logger)
+        public QuizzesController(IQuizService quizService, ILogger<QuizzesController> logger)
         {
             _quizService = quizService;
             _logger = logger;
         }
-       
+
         [HttpGet]
-        public async Task<IActionResult> GetAllQuizzes([FromQuery] int page =1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> GetAllQuizzes([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
@@ -29,14 +28,14 @@ namespace Quizou.Api.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 _logger.LogError(ex, "An error occurred while getting all quizzes.");
-                
+
                 // Return 500 Internal Server Error with a generic message
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        
+
         [HttpGet("category/{categorySlug}")]
         public async Task<IActionResult> GetQuizzesByCategory(string categorySlug)
         {
@@ -51,7 +50,7 @@ namespace Quizou.Api.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        
+
         [HttpGet("featured")]
         public async Task<IActionResult> GetQuizzesFeatured()
         {
@@ -66,7 +65,7 @@ namespace Quizou.Api.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetQuizById(int id)
         {
@@ -81,7 +80,7 @@ namespace Quizou.Api.Controllers
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
-        
+
         [HttpGet("search/{term}")]
         public async Task<IActionResult> GetQuizzesBySearch(string term)
         {
@@ -92,7 +91,7 @@ namespace Quizou.Api.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error search the term {term}", term );
+                _logger.LogError(ex, "Error search the term {term}", term);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
@@ -105,9 +104,37 @@ namespace Quizou.Api.Controllers
                 int createdQuizId = await _quizService.AddQuizz(quiz);
                 return Ok(new { id = createdQuizId });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error to create a new quiz");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> Edit([FromBody] EditQuizDto payload)
+        {
+            try
+            {
+                await _quizService.Edit(payload);
+                return Ok($"Quiz with id {payload.Id} was edited.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while editing a quiz.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _quizService.Delete(id);
+                return Ok($"Quiz deleted");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while deleting a quiz.");
                 return StatusCode(500, "An error occurred while processing your request.");
             }
         }
