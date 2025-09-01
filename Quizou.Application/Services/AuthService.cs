@@ -1,15 +1,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Quizou.Application.Interfaces;
+using Quizou.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Quizou.Application.Interfaces;
-using Quizou.Domain.Entities;
 
 public class AuthService : IAuthService
 {
     private readonly IConfiguration _configuration;
-    private readonly IUserService _userService; 
+    private readonly IUserService _userService;
 
     public AuthService(IConfiguration configuration, IUserService userService)
     {
@@ -17,20 +17,19 @@ public class AuthService : IAuthService
         _userService = userService;
     }
 
-    public async Task<string> AuthenticateAsync(string email, string password)
+    public async Task<string?> AuthenticateAsync(string email, string password)
     {
-        // Aqui você validaria com o banco de dados. Exemplo simplificado:
         User? user = await _userService.GetUserByEmail(email);
 
         if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
             return null;
 
-        // Criação do token
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, email),
-            new Claim("avatar", user.Avatar), 
-            new Claim("nickname", user.Nickname), 
+            new Claim("avatar", user.Avatar),
+            new Claim("nickname", user.Nickname),
+            new Claim("name", user.Name),
             new Claim("email", user.Email),
             new Claim("role", user.Role.ToString()),
             new Claim("id", user.Id.ToString()),
@@ -44,9 +43,35 @@ public class AuthService : IAuthService
             issuer: _configuration["Jwt:Issuer"],
             audience: _configuration["Jwt:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddHours(1),
+            expires: DateTime.Now.AddMinutes(10),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public ClaimsPrincipal? ValidateToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+
+        try
+        {
+            var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidateAudience = true,
+                ValidAudience = _configuration["Jwt:Audience"],
+                ClockSkew = TimeSpan.Zero
+            }, out SecurityToken validatedToken);
+
+            return principal;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }

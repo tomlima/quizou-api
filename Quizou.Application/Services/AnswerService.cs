@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Quizou.Application.Interfaces;
+﻿using Quizou.Application.Interfaces;
 using Quizou.Domain.DTO;
 using Quizou.Domain.Entities;
-using Quizou.Domain.Enums;
 using Quizou.Infrastructure.Interfaces;
-using Quizou.Infrastructure.Repositories;
 
 namespace Quizou.Application.Services
 {
@@ -37,15 +34,15 @@ namespace Quizou.Application.Services
             // If a user try to set the answer as correct and already exist 
             // a correct one for this question we must return false because 
             // a question must have only one correct answer.
-            var existCorrectAnswerInQuestion =  await _repository.GetCorrectAnswerByQuestion(payload.QuestionId);
-            if (existCorrectAnswerInQuestion != null && payload.Correct == true) 
+            var existCorrectAnswerInQuestion = await _repository.GetCorrectAnswerByQuestion(payload.QuestionId);
+            if (existCorrectAnswerInQuestion != null && payload.Correct == true)
             {
                 return false;
             }
 
             // Check if answer exist before update it.
             Answer? answer = await _repository.GetById(payload.Id);
-            if(answer == null)
+            if (answer == null)
             {
                 return false;
             }

@@ -19,7 +19,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllQuizzes([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<IActionResult> Get([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpGet("category/{categorySlug}")]
-        public async Task<IActionResult> GetQuizzesByCategory(string categorySlug)
+        public async Task<IActionResult> GetByCategory(string categorySlug)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpGet("featured")]
-        public async Task<IActionResult> GetQuizzesFeatured()
+        public async Task<IActionResult> GetFeatured()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetQuizById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpGet("search/{term}")]
-        public async Task<IActionResult> GetQuizzesBySearch(string term)
+        public async Task<IActionResult> GetBySearch(string term)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Quizou.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddQuizz([FromBody] CreateQuizDto quiz)
+        public async Task<IActionResult> Create([FromBody] CreateQuizDto quiz)
         {
             try
             {

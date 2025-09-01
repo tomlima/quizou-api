@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Quizou.Application.Interfaces;
-using System.Threading.Tasks;
+using Quizou.Domain.DTO;
 using Quizou.Domain.Entities;
+using System.Security.Claims;
 
 namespace Quizou.Api.Controllers
 {
@@ -32,13 +32,55 @@ namespace Quizou.Api.Controllers
                     return Unauthorized("Invalid credentials.");
                 }
 
-                return Ok(new { Token = token });
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,         // Against XSS
+                    Secure = true,           // HTTPS only
+                    SameSite = SameSiteMode.None, // Against CSRF
+                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    Path = "/"
+                };
+
+                Response.Cookies.Append("jwt", token, cookieOptions);
+                return Ok(new { message = "Login realizado com sucesso" });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Login failed for user {Email}", request.Email);
                 return StatusCode(500, "An error occurred while processing your request.");
             }
+        }
+
+        [HttpGet("me")]
+        public IActionResult Me()
+        {
+            var token = Request.Cookies["jwt"];
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized();
+
+            var principal = _authService.ValidateToken(token);
+            if (principal == null)
+                return Unauthorized();
+
+            // Extrair claims e retornar dados do usuário
+            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+            var avatar = principal.FindFirst("avatar")?.Value;
+            var nickname = principal.FindFirst("nickname")?.Value;
+            var role = principal.FindFirst("role")?.Value;
+            var id = principal.FindFirst("id")?.Value;
+            var name = principal.FindFirst("name")?.Value;
+
+            var userSession = new UserSessionDto
+            {
+                Id = id,
+                Avatar = avatar,
+                Nickname = nickname,
+                Name = name,
+                Role = role,
+                Email = email
+            };
+
+            return Ok(userSession);
         }
     }
 }

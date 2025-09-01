@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Quizou.Application.Interfaces;  
+using Quizou.Application.Interfaces;
 using Quizou.Domain.DTO;
 
 namespace Quizou.Api.Controllers
@@ -10,10 +10,10 @@ namespace Quizou.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly ILogger<UsersController> _logger; 
+        private readonly ILogger<UsersController> _logger;
 
 
-        public UsersController(IUserService userService,ILogger<UsersController> logger)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace Quizou.Api.Controllers
                 var sessionUser = new UserSessionDto()
                 {
                     Email = user?.Email,
-                    Id = user?.Id,
+                    Id = user?.Id.ToString(),
                     Name = user?.Name,
                     Role = user?.Role.ToString(),
                     Avatar = user?.Avatar,
@@ -38,9 +38,9 @@ namespace Quizou.Api.Controllers
             }
             catch (Exception ex)
             {
-                
+
                 _logger.LogError(ex, "An error occurred while getting user {id}.", id);
-                
+
                 // Return 500 Internal Server Error with a generic message
                 return StatusCode(500, "An error occurred while processing your request.");
             }

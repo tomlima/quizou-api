@@ -88,6 +88,8 @@ public class QuizService(IQuizRepository _quizRepository, ICategoryRepository _c
         quiz.Time = payload.Time;
         quiz.Category = category;
         quiz.UpdatedAt = DateTime.UtcNow;
+        quiz.PublishedAt = payload.PublishedAt;
+        quiz.Featured = payload.Featured;
 
         await _quizRepository.Edit(quiz);
     }

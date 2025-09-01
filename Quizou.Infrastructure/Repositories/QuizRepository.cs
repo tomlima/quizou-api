@@ -18,6 +18,7 @@ public class QuizRepository(ApplicationDbContext context) : IQuizRepository
         var query = context.Quizzes
             .Where(q => q.Status != QuizStatus.Deleted)
             .Include(q => q.Category)
+            .Include(q => q.Tags)
             .OrderByDescending(q => q.CreatedAt);
 
         var totalItems = await query.CountAsync();

@@ -23,5 +23,8 @@ namespace Quizou.Domain.DTO
         public required string Image { get; set; }
         [Required]
         public required QuizStatus Status { get; set; }
+        public required DateTime? PublishedAt { get; set; }
+        [Required]
+        public required bool Featured { get; set; }
     }
 }

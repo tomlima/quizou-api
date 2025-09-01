@@ -26,4 +26,8 @@
         <ProjectReference Include="..\Quizou.Domain\Quizou.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CrossCutting\Services\" />
+    </ItemGroup>
+
 </Project>

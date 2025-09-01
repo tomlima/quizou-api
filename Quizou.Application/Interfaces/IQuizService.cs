@@ -13,5 +13,4 @@ public interface IQuizService
     public Task<List<Quiz>> GetQuizzesBySearch(string termSearched);
     public Task Edit(EditQuizDto payload);
     public Task<bool> Delete(int id);
-
 }
